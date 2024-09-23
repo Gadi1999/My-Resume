@@ -11,7 +11,7 @@ def insert_data(name, mobile, email):
     """
 
     try:
-        mydb = myconn.connect(host="localhost", user="root", password="your_password", database="Learncoding")  # Replace "your_password" with your actual password
+        mydb = myconn.connect(host="localhost", user="root", password="Gadi@1999", database="Learncoding")  # Replace "your_password" with your actual password
         mycursor = mydb.cursor()
 
         sql = "INSERT INTO learncoding.datainsert (name, mobile, email) VALUES (%s, %s, %s)"
