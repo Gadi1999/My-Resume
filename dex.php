@@ -69,7 +69,7 @@
 </body>
 <?php
 // Replace with your database credentials
-$servername = "localhost:3306";
+$servername = "4.240.55.215:3306";
 $username = "root";
 $password = "Gadi@1999";
 $dbname = "learncoding";
