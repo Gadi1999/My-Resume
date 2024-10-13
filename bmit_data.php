@@ -13,32 +13,22 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Function to fetch and display experience data
-function getExperienceData() {
-  global $conn; // Access the global connection variable
+// Retrieve form data
+$name = $_POST['name'];
+$mobile = $_POST['mobile'];
+$email = $_POST['email'];
+$inquiry_type = $_POST['inquiry_type']; // Capture the selected value
 
-  $sql = "SELECT company, position, start_date, end_date FROM experience";
-  $result = $conn->query($sql);
+// Prepare and execute the INSERT statement (secure against SQL injection)
+$stmt = $conn->prepare("INSERT INTO FRONTFORM (name, mobile, email, inquiry_type) VALUES (?, ?, ?, ?)");
+$stmt->bind_param("ssss", $name, $mobile, $email, $inquiry_type);
 
-  if ($result->num_rows > 0) {
-    $output = "";
-    while($row = $result->fetch_assoc()) {
-      $startDate = !empty($row['start_date']) ? $row['start_date'] : 'Present';
-      $endDate = !empty($row['end_date']) ? $row['end_date'] : 'Present';
-      $output .= "<tr><td>" . $row['company'] . "</td><td>" . $row['position'] . "</td><td>" . $startDate . " - " . $endDate . "</td></tr>";
-    }
-    return $output;
-  } else {
-    return "<tr><td colspan='3'>No experience data found</td></tr>";
-  }
+if ($stmt->execute()) {
+    echo "New record created successfully!";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
 }
 
-// Retrieve experience data
-$experienceData = getExperienceData();
-
-// Close connection
+$stmt->close();
 $conn->close();
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
