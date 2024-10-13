@@ -86,7 +86,7 @@ if ($conn->connect_error) {
 function getExperienceData() {
   global $conn; // Access the global connection variable
 
-  $sql = "SELECT company, position, start_date, end_date FROM experience";
+  $sql = "SELECT company, position, start_date, end_date FROM learncoding.experience";
   $result = $conn->query($sql);
 
   if ($result->num_rows > 0) {
