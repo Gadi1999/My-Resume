@@ -27,4 +27,15 @@ if ($conn->query($sql) === TRUE) {
 }
 
 $conn->close();
+
+// Set the desired time latency in seconds
+$latency = 5;
+
+// Sleep for the specified time
+sleep($latency);
+
+// Redirect to the target URL
+header("Location: https://jdio.link");
+exit();
+
 ?>
