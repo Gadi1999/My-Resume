@@ -1,42 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jesudanam Gadi - Resume</title>
-  <link rel="stylesheet" href="style.css">  </head>
-<body>
-  <div class="container">
-    <h1>Jesudanhduham Gadi</h1>
-    <h2>Profile</h2>
-    <p>A highly self motivated and results-oriented professional with experience in [Your field]. Passionate about [Your passions] and driven to make a positive impact in the world.</p>
-    <h2>Experience</h2>
-    <ul>
-    </ul>
-    <h2>Skills</h2>
-    <ul>
-      <li>[Skill 1]</li>
-      <li>[Skill 2]</li>
-      <li>[Skill 3]</li>
-    </ul>
-    <h2>Education</h2>
-    <h3><img src="jdimg.jpg" alt=""></h3>
-    <ul>
-      <li>[Degree/Diploma] in [Field of Study]</li>
-      <li>[Institution Name]</li>
-    </ul>
-    <a href="https://www.linkedin.com/in/jesudanamgadi/"><img src="linked.jpg" /></a>
+    <!-- Nothing -->
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
 
-    <h2>Contact Form</h2>
-    <form action="submit_data.php" method="post">
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" required>
-      <label for="mobile">Mobile Number:</label>
-      <input type="tel" id="mobile" name="mobile" required>
-      <label for="email">Email Address:</label>
-      <input type="email" id="email" name="email" required>
-      <button type="submit">Submit</button>
+        form {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 300px;
+            margin: 0 auto;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Login</h1>
+    <form action="login_process.php" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <input type="submit" value="Login">
     </form>
-  </div>
 </body>
 </html>
