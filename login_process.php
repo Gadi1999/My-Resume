@@ -39,7 +39,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             echo "Login successful!";
 
             // Optional: Redirect to another page after successful login
-            header("Location: https://jdio.link/page.html");
+            header("Location: https://jdio.link/page.php");
             exit();
         } else {
             echo "Invalid username or password.";

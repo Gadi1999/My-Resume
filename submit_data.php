@@ -17,11 +17,14 @@ if ($conn->connect_error) {
 $name = $_POST['name'];
 $mobile = $_POST['mobile'];
 $email = $_POST['email'];
+$inquiry_type = $_POST['inquiry_type']; // Capture the selected value
 
-// Prepare and execute the INSERT statement
-$sql = "INSERT INTO FRONTFORM (name, mobile, email) VALUES ('$name', '$mobile', '$email')"; // Replace "your_table_name" with the actual name of your table
-if ($conn->query($sql) === TRUE) {
-    echo "New record created successfully";
+// Prepare and execute the INSERT statement (secure against SQL injection)
+$stmt = $conn->prepare("INSERT INTO FRONTFORM (name, mobile, email, inquiry_type) VALUES (?, ?, ?, ?)");
+$stmt->bind_param("ssss", $name, $mobile, $email, $inquiry_type);
+
+if ($stmt->execute()) {
+    echo "New record created successfully!";
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
