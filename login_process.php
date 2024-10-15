@@ -12,30 +12,43 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-//test
+
 // Initialize session (optional, can be placed elsewhere)
 session_start();
 
 // Check if login form is submitted
 if (isset($_POST['username']) && isset($_POST['password'])) {
     $username = $_POST['username'];
-    $password = $_POST['password']; // Needs to be hashed before validation
+    $password = $_POST['password']; // **Do not store plain text password**
 
-    // Validate credentials against database (replace with your logic)
-    $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'"; // Hash password before storing in DB
-    $result = $conn->query($sql);
+    // Validate credentials against database
+    $sql = "SELECT * FROM users WHERE username = ?"; // Use prepared statement
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if ($result->num_rows === 1) {
-        // Login successful, store username in session
-        $_SESSION['username'] = $username;
-        echo "Login successful!";
+        $user_data = $result->fetch_assoc(); // Get user data
 
-        // Optional: Redirect to another page after successful login
-        // header("Location: https://jdio.link/");
-        // exit();
+        // Verify password using password hashing
+        if (password_verify($password, $user_data['password'])) {
+            // Login successful, store username in session
+            $_SESSION['username'] = $username;
+            echo "Login successful!";
+
+            // Optional: Redirect to another page after successful login
+            header("Location: https://jdio.link/page.html");
+            exit();
+        } else {
+            echo "Invalid username or password.";
+        }
     } else {
         echo "Invalid username or password.";
     }
+
+    $stmt->close(); // Close prepared statement (optional but recommended)
 }
 
 // Close connection
@@ -47,8 +60,6 @@ $latency = 5;
 
 // Sleep for the specified time
 sleep($latency);
-
-// Redirect to the target URL
-header("Location: https://jdio.link/page.html");
+header("Location: https://jdio.link/index.html"); // Remove if not needed
 exit();
 ?>

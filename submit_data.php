@@ -29,7 +29,7 @@ if ($conn->query($sql) === TRUE) {
 $conn->close();
 
 // Set the desired time latency in seconds
-$latency = 30;
+$latency = 5;
 
 // Sleep for the specified time
 sleep($latency);
