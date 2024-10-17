@@ -1,9 +1,6 @@
 <?php
 // Replace with your database credentials
-$servername = "4.240.55.215:3306";
-$username = "root";
-$password = "Gadi@1999";
-$dbname = "learncoding";
+include 'databaseconn.php';
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

@@ -151,10 +151,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     <ul class="experience">
       <?php
       // Replace with your database credentials
-      $servername = "4.240.55.215:3306"; // or your IP address without the port
-      $username = "root";
-      $password = "Gadi@1999";
-      $dbname = "learncoding";
+      include 'databaseconn.php';
 
       // Create connection
       $conn = new mysqli($servername, $username, $password, $dbname);
