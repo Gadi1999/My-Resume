@@ -1,6 +1,6 @@
 <?php
 // Replace with your database credentials
-$servername = "localhost:3306";
+$servername = "4.240.55.215:3306";
 $username = "root";
 $password = "Gadi@1999";
 $dbname = "learncoding";
@@ -13,33 +13,36 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Initialize session (optional, can be placed elsewhere)
+// Initialize session
 session_start();
 
 // Check if login form is submitted
-if (isset($_POST['username']) && isset($_POST['password'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['username']) && isset($_POST['password'])) {
     $username = $_POST['username'];
-    $password = $_POST['password']; // **Do not store plain text password**
+    $password = $_POST['password'];
 
     // Validate credentials against database
-    $sql = "SELECT * FROM users WHERE username = ?"; // Use prepared statement
-
+    $sql = "SELECT * FROM users WHERE username = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows === 1) {
-        $user_data = $result->fetch_assoc(); // Get user data
+        $user_data = $result->fetch_assoc();
 
-        // Verify password using password hashing
+        // Verify password using password_verify (assuming passwords are hashed)
         if (password_verify($password, $user_data['password'])) {
-            // Login successful, store username in session
-            $_SESSION['username'] = $username;
-            echo "Login successful!";
+            // Login successful, create session variables
+            $_SESSION['user_id'] = $user_data['id'];
+            $_SESSION['username'] = $user_data['username'];
+            $_SESSION['loggedin'] = true;
 
-            // Optional: Redirect to another page after successful login
-            header("Location: https://jdio.link/page.php");
+            // Optional: Regenerate session ID to prevent session fixation attacks
+            session_regenerate_id(true);
+
+            // Redirect to dashboard or another page after successful login
+            header("Location: dashboard.php");
             exit();
         } else {
             echo "Invalid username or password.";
@@ -48,18 +51,16 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         echo "Invalid username or password.";
     }
 
-    $stmt->close(); // Close prepared statement (optional but recommended)
+    // Close prepared statement
+    $stmt->close();
 }
 
 // Close connection
 $conn->close();
 
-// (Optional) Remove these lines if not required for your login page
-// Set the desired time latency in seconds
+// Optional latency for redirect (if needed)
 $latency = 5;
-
-// Sleep for the specified time
 sleep($latency);
-header("Location: https://jdio.link/index.html"); // Remove if not needed
+header("Location: https://jdio.link/index.html"); // Remove or modify if not needed
 exit();
 ?>

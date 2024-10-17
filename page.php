@@ -1,11 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+session_start();
+
+$timeout_duration = 15; // 30 minutes
+
+// Check if the user is logged in
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+    if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $timeout_duration) {
+        // Last activity was more than the timeout duration, so log out the user
+        session_unset();
+        session_destroy();
+        header("Location: index.html");
+        exit();
+    }
+    // Update last activity timestamp
+    $_SESSION['last_activity'] = time();
+} else {
+    // Redirect to login if not logged in
+    header("Location: index.html");
+    exit();
+}
+?>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jesudanam Gadi - Resume</title>
   <style>
     body {
+      background-image: url('nature.png');
       margin: 0;
       padding: 0;
       font-family: sans-serif;
